@@ -31,10 +31,10 @@ android:
     - addon-google_apis-google-26 # google play services
 
     # Emulators for instrumentation testing
-    - sys-img-armeabi-v7a-addon-google_apis-google-$ANDROID_API
-    - sys-img-armeabi-v7a-addon-google_apis-google-$EMULATOR_API
-    #- sys-img-armeabi-v7a-android-26
-    #- sys-img-armeabi-v7a-android-17
+    #- sys-img-armeabi-v7a-addon-google_apis-google-$ANDROID_API
+    #- sys-img-armeabi-v7a-addon-google_apis-google-$EMULATOR_API
+    - sys-img-armeabi-v7a-android-26
+    - sys-img-armeabi-v7a-android-22
 
   licenses:
     - android-sdk-preview-license-.+
