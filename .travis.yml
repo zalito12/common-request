@@ -48,13 +48,20 @@ before_install:
   - chmod +x gradlew
   #- ./gradlew dependencies || true # DON'T ADD unless you are getting "Install missing components using SDK manager"
   #Source: https://medium.com/@oldergod/constraint-layout-and-circleci-travis-d50342696d2
+  - pip install --user codecov    #Install codecov
 
 before_script:
   - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a
   - emulator -avd test -no-skin -no-audio -no-window &
-  - android-wait-for-emulator
-  - adb shell input keyevent 82 &
 
 script:
-  - "./gradlew clean build check --stacktrace"
-  - "./gradlew clean build connectedCheck -PdisablePreDex --stacktrace"
+  - ./gradlew clean build jacocoTestReport
+  - ./gradlew check -PdisablePreDex --continue --stacktrace
+  - android-wait-for-emulator
+  - adb shell input keyevent 82 &
+  - ./gradlew connectedCheck -PdisablePreDex --continue --stacktrace
+
+after_success:
+    - codecov                       #Run codecov
+
+after_failure: "cat $TRAVIS_BUILD_DIR/app/build/outputs/lint-results-debug.xml"
